@@ -13,7 +13,6 @@ export class AuthController {
 
   @Post()
   test() {
-    console.log('env from controller', process.env.MONGO_URI)
     return 'ok'
   }
 

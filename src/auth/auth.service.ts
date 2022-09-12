@@ -6,14 +6,13 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  
+
   constructor(
     private userService: UserService,
-    private configService: ConfigService
-    ) { }
-  
+    private configService: ConfigService,
+  ) { }
+
   async signPayload(payload: Payload) {
-    console.log('env from auth service', this.configService.get<string>('SECRET_KEY'))
-    return sign(payload, "coucoulol", { expiresIn: '7d' });
+    return sign(payload, process.env.SECRET_KEY, { expiresIn: '7d' });
   }
 }
