@@ -47,8 +47,8 @@ export class UserService {
         return sanitized;
       }
       // the new methods
-      async findByEmail(emailPayload: Payload) {
-        const { email } = emailPayload;
+      async findByPayload(payload: Payload) {
+        const { email } = payload;
         return await this.userModel.findOne({ email });
       }
     
