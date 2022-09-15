@@ -1,8 +1,11 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AppModule } from '../app.module';
+import { UserModule } from '../user/user.module';
 import { UserSchema } from '../models/user.schema';
 import { UserService } from '../user/user.service';
 import { AuthController } from './auth.controller';
+import { AuthModule } from './auth.module';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -12,7 +15,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [AuthService, UserService],
-      imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
+      imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]), AppModule],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
