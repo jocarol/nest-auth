@@ -31,9 +31,26 @@ describe('AuthController', () => {
     })
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('should be defined', () => {
     expect(authController).toBeDefined();
   });
+
+  it(`should returns HTTP code '200' when reaching a non-JWT guarded controller route while not being logged in`, () => {
+    return request(app.getHttpServer()).get(`/auth/anyone`).expect(200)
+  })
+
+  it(`should returns HTTP code '200' when reaching a JWT guarded controller route while being logged in`, () => {
+    console.log(newUserResponse.body)
+    return request(app.getHttpServer()).get(`/auth/onlyauth`).set('Authorization', `Bearer ${newUserResponse.body.token}`).expect(200)
+  })
+
+  it(`should returns HTTP code '401' when reaching a JWT guarded controller route while not being logged in`, () => {
+    return request(app.getHttpServer()).get(`/auth/onlyauth`).expect(401)
+  })
 
   it(`should returns HTTP code '201' when performing a POST request to '${process.env.REGISTER_ROUTE}' with email & password in the body, to register a user`, () => {
     expect(newUserResponse.status).toEqual(201)
