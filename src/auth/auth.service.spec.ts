@@ -1,11 +1,9 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../app.module';
-import { UserModule } from '../user/user.module';
 import { UserSchema } from '../models/user.schema';
 import { UserService } from '../user/user.service';
 import { AuthController } from './auth.controller';
-import { AuthModule } from './auth.module';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {

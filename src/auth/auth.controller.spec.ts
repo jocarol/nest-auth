@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import * as request from 'supertest'
+
 import { AppModule } from '../app.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../models/user.schema';
 import { AuthModule } from './auth.module';
 import { UserService } from '../user/user.service';
-import * as request from 'supertest'
-import { INestApplication } from '@nestjs/common';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -44,7 +45,6 @@ describe('AuthController', () => {
   })
 
   it(`should returns HTTP code '200' when reaching a JWT guarded controller route while being logged in`, () => {
-    console.log(newUserResponse.body)
     return request(app.getHttpServer()).get(`/auth/onlyauth`).set('Authorization', `Bearer ${newUserResponse.body.token}`).expect(200)
   })
 

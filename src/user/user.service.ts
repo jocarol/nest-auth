@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/types/user';
-import { RegisterDTO } from './register.dto';
 import * as bcrypt from 'bcrypt';
+
+import { RegisterDTO } from './register.dto';
 import { LoginDTO } from 'src/auth/login.dto';
 import { Payload } from 'src/types/payload';
+import { User } from 'src/types/user';
 
 @Injectable()
 export class UserService {
@@ -22,7 +23,7 @@ export class UserService {
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
     }
 
-    const createdUser = new this.userModel(RegisterDTO);
+    const createdUser: User = new this.userModel(RegisterDTO);
 
     await createdUser.save();
 
@@ -37,6 +38,7 @@ export class UserService {
       throw new HttpException('user doesnt exists', HttpStatus.BAD_REQUEST);
     }
     if (await bcrypt.compare(password, user.password)) {
+
       return this.sanitizeUser(user)
     } else {
       throw new HttpException('invalid credential', HttpStatus.BAD_REQUEST);
