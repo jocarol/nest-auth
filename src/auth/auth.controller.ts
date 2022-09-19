@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
+
 import { RegisterDTO } from '../user/register.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
@@ -16,7 +17,6 @@ export class AuthController {
   @Get("/onlyauth")
   @UseGuards(AuthGuard("jwt"))
   async hiddenInformation() {
-
     return "hidden information";
   }
 
@@ -47,5 +47,4 @@ export class AuthController {
 
     return { user, token };
   }
-
 }

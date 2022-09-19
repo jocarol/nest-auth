@@ -10,7 +10,6 @@ import { User } from 'src/types/user';
 
 @Injectable()
 export class UserService {
-
   constructor(
     @InjectModel('User') private userModel: Model<User>,
   ) { }
